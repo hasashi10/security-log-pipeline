@@ -1,0 +1,15 @@
+Sep 21 09:10:36 fedora sudo[155692]:     hanz : TTY=pts/0 ; PWD=/home/hanz/Documents/security-log-pipeline ; USER=root ; COMMAND=/usr/sbin/ls
+Sep 21 09:10:36 fedora sudo[155692]: pam_systemd(sudo:session): Failed to check if /run/user/0/bus exists, ignoring: Permission denied
+Sep 21 09:10:36 fedora sudo[155692]: pam_unix(sudo:session): session opened for user root(uid=0) by hanz(uid=1000)
+Sep 21 09:10:36 fedora sudo[155692]: pam_unix(sudo:session): session closed for user root
+Sep 21 09:11:56 fedora sudo[156017]:     hanz : TTY=pts/0 ; PWD=/home/hanz/Documents/security-log-pipeline ; USER=root ; COMMAND=/usr/sbin/lastb
+Sep 21 09:11:57 fedora sudo[156017]: pam_systemd(sudo:session): Failed to check if /run/user/0/bus exists, ignoring: Permission denied
+Sep 21 09:11:57 fedora sudo[156017]: pam_unix(sudo:session): session opened for user root(uid=0) by hanz(uid=1000)
+Sep 21 09:11:57 fedora sudo[156017]: pam_unix(sudo:session): session closed for user root
+Sep 21 09:13:17 fedora sudo[156163]: pam_unix(sudo:auth): authentication failure; logname=hanz uid=1000 euid=0 tty=/dev/pts/0 ruser=hanz rhost=  user=hanz
+Sep 21 09:13:30 fedora sudo[156163]:     hanz : 3 incorrect password attempts ; TTY=pts/0 ; PWD=/home/hanz/Documents/security-log-pipeline ; USER=root ; COMMAND=/usr/sbin/ls
+Sep 21 09:13:54 fedora sudo[156333]: pam_unix(sudo:auth): authentication failure; logname=hanz uid=1000 euid=0 tty=/dev/pts/0 ruser=hanz rhost=  user=hanz
+Sep 21 09:14:09 fedora sudo[156333]:     hanz : TTY=pts/0 ; PWD=/home/hanz/Documents/security-log-pipeline ; USER=root ; COMMAND=/usr/sbin/ls
+Sep 21 09:14:09 fedora sudo[156333]: pam_systemd(sudo:session): Failed to check if /run/user/0/bus exists, ignoring: Permission denied
+Sep 21 09:14:09 fedora sudo[156333]: pam_unix(sudo:session): session opened for user root(uid=0) by hanz(uid=1000)
+Sep 21 09:14:09 fedora sudo[156333]: pam_unix(sudo:session): session closed for user root
