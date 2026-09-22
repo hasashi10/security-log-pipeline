@@ -1,6 +1,8 @@
 #include <fstream>
 #include<iostream>
 #include<string>
+#include<vector>
+#include<unordered_map>
 
 
 enum class EventType{ AuthFailure, SudoSuccess, Other};
@@ -44,20 +46,30 @@ LogEvent parseLine(const std::string& line){
 int main(){
     std::ifstream file("data/sudo_events.txt");
     if(!file){
-        std::cerr<< "could not opendata/sudo_events.txt\n";
+        std::cerr<<"could not opent data/sudo_events.txt\n";
         return 1;
-    }
+    }    
+   std::vector<LogEvent> events;
     std::string line;
+    while (std::getline(file, line)){
+        events.push_back(parseLine(line));
+    }
+    std::cout<<"Parsed" <<events.size() << "events\n";
+    std::unordered_map<std::string, int> failureByUser;
+
     int failures = 0;
     int successes = 0;
-    while (std::getline(file, line)){
-        LogEvent ev = parseLine(line);
+    for (const LogEvent& ev : events){
         if(ev.type() == EventType::AuthFailure){
             ++failures;
+            failureByUser[ev.user()]++;
             std::cout <<ev.timestamp()<< " FAIL user="<< ev.user()<< "\n";
         } else if (ev.type() == EventType::SudoSuccess){
             ++successes;
         }
+    }
+    for (const auto& pair : failureByUser){
+        std::cout<< pair.first<<": "<<"faulures\n";
     }
     std::cout<<"failures: "<<failures <<"\n";
     std::cout<<"successes: "<<successes<<"\n";
