@@ -6,15 +6,26 @@
 #include<ctime>
 #include<sstream>
 #include<iomanip>
+#include<algorithm>
 
 
 
 std::time_t parseTimestamp(const std::string& raw){
     std::tm tm{};
     std::istringstream ss(raw);
-    ss>> std::get_time(&tm, "%b %d %H:%M:%S");
-    tm.tm_year = 126;
+    ss>> std::get_time(&tm, "%Y-%m-%dT%H:%M:%S");
     return std::mktime(&tm);
+}
+bool hasBruteForce(std::vector<std::time_t> times, int threshold, int windowSeconds){
+    std::sort(times.begin(), times.end());
+    for(size_t i = 0; i+ threshold -1 < times.size(); ++i){
+        std::time_t windowStart = times[i];
+        std::time_t windowEnd = times[i + threshold - 1];
+        if(windowEnd - windowStart <= windowSeconds){
+            return true;
+        }
+    }
+    return false;
 }
 enum class EventType{ AuthFailure, SudoSuccess, Other};
 
@@ -39,7 +50,7 @@ class LogEvent{
 };
 
 LogEvent parseLine(const std::string& line){
-    std::string timestamp = line.substr(0, 15);
+    std::string timestamp = line.substr(0, 19);
     std::string user;
     EventType type =EventType::Other;
 
@@ -84,7 +95,12 @@ int main(){
         }
     }
     for (const auto& pair : failureByUser){
-        std::cout<< pair.first<<": "<< pair.second.size() << " failures\n";
+        std::cout<<pair.first <<": " << pair.second.size() << " failures";
+        if(hasBruteForce(pair.second, 5, 600)){
+            std::cout << " <-- Brute Force Detected";
+
+        }
+        std::cout << "\n";
     }
     std::cout<<"failures: "<<failures <<"\n";
     std::cout<<"successes: "<<successes<<"\n";
