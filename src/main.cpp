@@ -70,21 +70,21 @@ int main(){
         events.push_back(parseLine(line));
     }
     std::cout<< "Parsed " <<events.size() << " events\n";
-    std::unordered_map<std::string, int> failureByUser;
+    std::unordered_map<std::string, std::vector<std::time_t>> failureByUser;
 
     int failures = 0;
     int successes = 0;
     for (const LogEvent& ev : events){
         if(ev.type() == EventType::AuthFailure){
             ++failures;
-            failureByUser[ev.user()]++;
+            failureByUser[ev.user()].push_back(ev.time());
             std::cout <<ev.timestamp()<< " FAIL user="<< ev.user()<< "\n";
         } else if (ev.type() == EventType::SudoSuccess){
             ++successes;
         }
     }
     for (const auto& pair : failureByUser){
-        std::cout<< pair.first<<": "<< pair.second << " failures\n";
+        std::cout<< pair.first<<": "<< pair.second.size() << " failures\n";
     }
     std::cout<<"failures: "<<failures <<"\n";
     std::cout<<"successes: "<<successes<<"\n";
